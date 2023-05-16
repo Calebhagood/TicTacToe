@@ -18,6 +18,7 @@
       <div class="gameContainer">
         <div class="gameBoard">
           <!--9 divs, one for each square of the tic tac toe board-->
+          <div class="gameBox" id="0"></div>
           <div class="gameBox" id="1"></div>
           <div class="gameBox" id="2"></div>
           <div class="gameBox" id="3"></div>
@@ -26,7 +27,6 @@
           <div class="gameBox" id="6"></div>
           <div class="gameBox" id="7"></div>
           <div class="gameBox" id="8"></div>
-          <div class="gameBox" id="9"></div>
         </div>
       </div>
     </div>
@@ -39,10 +39,9 @@
     </div>
     <div class="modalContainer">
       <div class="modal" id="playerForm">
-        <div class="front-content">
-          <form id="myForm">
+        <div class="frontContent">
+          <form id="gameForm">
             <div class="inputField">
-              <label for="PlayerVsPlayer" class="label">Player vs Player</label>
               <input
                 type="radio"
                 name="gameChoice"
@@ -50,11 +49,9 @@
                 value="0"
                 required
               />
+              <label for="PlayerVsPlayer" class="label">Player vs Player</label>
             </div>
             <div class="inputField">
-              <label for="PlayerVsPlayer" class="label"
-                >Player vs Easy AI</label
-              >
               <input
                 type="radio"
                 name="gameChoice"
@@ -62,11 +59,11 @@
                 value="1"
                 required
               />
+              <label for="PlayerVsPlayer" class="label"
+                >Player vs Easy AI</label
+              >
             </div>
             <div class="inputField">
-              <label for="PlayerVsPlayer" class="label"
-                >Player vs Hard AI</label
-              >
               <input
                 type="radio"
                 name="gameChoice"
@@ -74,8 +71,11 @@
                 value="2"
                 required
               />
+              <label for="PlayerVsPlayer" class="label"
+                >Player vs Hard AI</label
+              >
             </div>
-            <div class="startButtonContainer">
+            <div class="flex">
               <button type="submit" class="startButton">Start Game</button>
             </div>
           </form>
