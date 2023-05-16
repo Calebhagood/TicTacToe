@@ -1,0 +1,199 @@
+:root {
+  --primaryColor: black;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: #000;
+  color: #fff;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+}
+
+.title,
+.displayTurn,
+.buttons {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 25px;
+}
+
+.title {
+  padding-top: 4rem;
+  font-size: 5rem;
+}
+
+.displayTurn {
+  font-size: 2.5rem;
+}
+
+.buttons {
+  height: 20px;
+  padding-bottom: 3rem;
+  cursor: pointer;
+  display: flex;
+  gap: 20px;
+}
+
+.btn {
+  transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+}
+
+.gameContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.gameBoard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 20px;
+  width: 25vw;
+  height: 25vh;
+}
+
+.gameBox {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  width: auto;
+  min-width: 50px;
+  height: auto;
+  min-height: 50px;
+  outline: #fff solid 1px;
+  border-radius: 15px;
+  font-size: max(4vw, 3rem);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.gameBox:hover {
+  transform: scale(1.1);
+}
+
+.player1 {
+  color: #0791ec;
+}
+
+.player2 {
+  color: #e50000;
+}
+
+@media only screen and (max-width: 900px) {
+  .gameContainer {
+    width: 100vw;
+  }
+
+  .gameBoard {
+    width: auto;
+  }
+}
+
+/* gameplay settings form */
+
+.modalContainer {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+}
+
+.modal {
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  overflow: auto;
+  height: fit-content;
+  font: max(5vh, 20px);
+}
+
+.modalContent,
+.frontContent {
+  background-color: #ffffffc6;
+  text-align: center;
+  width: 100%;
+  border: 1px;
+  border-radius: 20px;
+  color: #000;
+}
+
+.frontContent {
+  margin: 5vh auto;
+  border: none;
+  width: auto;
+  border-radius: 0;
+  border: 0.2rem solid #fff;
+  border-radius: 2rem;
+  padding: 2rem 5rem;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.inputField {
+  display: flex;
+  font-size: max(3vw, 25px);
+  width: 100%;
+  padding-bottom: 3rem;
+  align-items: center;
+  gap: 20px;
+}
+
+.label {
+  min-width: 50%;
+}
+
+.radio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  width: 200px;
+}
+
+input[type="radio"] {
+  border: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 2rem;
+}
+
+.startButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  width: 200px;
+  outline: none;
+  background-color: #000;
+  border: #fff solid 1px;
+  border-radius: 1rem;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.startButton:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
