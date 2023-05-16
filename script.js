@@ -72,17 +72,27 @@ const playMove = (box, data) => {
 
   //check end conditions
   if (endConditions(data)) {
-    //adjust DOM
+    return;
   }
-  console.log(box, data);
+
+  // change the current player
+  changePlayer(data);
 };
 
 const endConditions = (data) => {
   if (checkWinner(data)) {
     //adjust DOM to reflect win
+    adjustDom(
+      "displayTurn",
+      data.currentPlayer === "X"
+        ? "Player 1 has won the game"
+        : "Player 2 has won the game"
+    );
     return true;
   } else if (data.round > 8) {
     //adjust DOM to reflect tie
+    adjustDom("displayTurn", "It's a Tie!");
+    data.gameOver = true;
     return true;
   } else {
     return false;
@@ -96,10 +106,20 @@ const checkWinner = (data) => {
       data.gameBoard[condition[0]] === data.gameBoard[condition[1]] &&
       data.gameBoard[condition[1]] === data.gameBoard[condition[2]]
     ) {
-      console.log("player has won");
       data.gameOver = true;
       result = true;
     }
   });
   return result;
+};
+
+const adjustDom = (className, textContent) => {
+  const elem = document.querySelector(`.${className}`);
+  elem.textContent = textContent;
+};
+
+const changePlayer = (data) => {
+  data.currentPlayer = data.currentPlayer === "X" ? "O" : "X";
+  let turnText = data.currentPlayer === "X" ? "Player 1" : "Player 2";
+  adjustDom("displayTurn", `${turnText}'s turn`);
 };
