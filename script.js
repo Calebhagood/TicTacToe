@@ -76,7 +76,12 @@ const playMove = (box, data) => {
   }
 
   // change the current player
-  changePlayer(data);
+  if (data.gameChoice === 0) {
+    changePlayer(data);
+  } else if (data.gameChoice === 1) {
+    easyAiMove(data);
+    //easy AI
+  }
 };
 
 const endConditions = (data) => {
@@ -89,7 +94,7 @@ const endConditions = (data) => {
         : "Player 2 has won the game"
     );
     return true;
-  } else if (data.round > 8) {
+  } else if (data.round === 9) {
     //adjust DOM to reflect tie
     adjustDom("displayTurn", "It's a Tie!");
     data.gameOver = true;
@@ -122,4 +127,24 @@ const changePlayer = (data) => {
   data.currentPlayer = data.currentPlayer === "X" ? "O" : "X";
   let turnText = data.currentPlayer === "X" ? "Player 1" : "Player 2";
   adjustDom("displayTurn", `${turnText}'s turn`);
+};
+
+const easyAiMove = (data) => {
+  changePlayer(data);
+  data.round++;
+  let availableSpaces = data.gameBoard.filter(
+    (space) => space !== "X" && space !== "O"
+  );
+  let move =
+    availableSpaces[Math.floor(Math.random() * availableSpaces.length)];
+  setTimeout(() => {
+    data.gameBoard[move] = data.player2;
+    let box = document.getElementById(`${move}`);
+    box.textContent = data.player2;
+    box.classList.add("player2");
+    if (endConditions(data)) {
+      return;
+    }
+    changePlayer(data);
+  });
 };
