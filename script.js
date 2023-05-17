@@ -1,4 +1,10 @@
 const form = document.querySelector("#gameForm");
+const newGameBtn = document.querySelector("#newGameBtn");
+const resetGameBtn = document.querySelector("#resetGameBtn");
+
+newGameBtn.addEventListener("click", () => {
+  location.reload();
+});
 
 //array of all of the winning conditions
 const winningConditions = [
@@ -35,6 +41,15 @@ const initializeVariables = (data) => {
   data.gameOver = false;
 };
 
+const resetDom = () => {
+  document.querySelectorAll(".gameBox").forEach((box) => {
+    box.className = "gameBox";
+    box.textContent = "";
+
+    adjustDom("displayTurn", `Player 1's turn`);
+  });
+};
+
 //function that adds event listeners to game board
 const addEventListenersToGameBoard = (data) => {
   document.querySelectorAll(".gameBox").forEach((box) => {
@@ -42,12 +57,17 @@ const addEventListenersToGameBoard = (data) => {
       playMove(event.target, data);
     });
   });
+  resetGameBtn.addEventListener("click", () => {
+    initializeVariables(data);
+    resetDom();
+  });
 };
 
 //function that starts the game
 const initializeGame = (data) => {
   initializeVariables(data);
   addEventListenersToGameBoard(data);
+  resetGameBtn.addEventListener("click", () => {});
 };
 
 const playMove = (box, data) => {
