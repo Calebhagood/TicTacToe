@@ -80,12 +80,22 @@ const playMove = (box, data) => {
     changePlayer(data);
   } else if (data.gameChoice === 1) {
     easyAiMove(data);
+    data.currentPlayer = "X";
     //easy AI
+  } else if (data.gameChoice === 2) {
+    //hard AI with minimax
+    changePlayer(data);
+    ImpossibleAiMove(data);
+    if (endConditions(data)) {
+      return;
+    }
+    changePlayer(data);
+    console.log(data);
   }
 };
 
 const endConditions = (data) => {
-  if (checkWinner(data)) {
+  if (checkWinner(data, data.currentPlayer)) {
     //adjust DOM to reflect win
     adjustDom(
       "displayTurn",
@@ -104,14 +114,14 @@ const endConditions = (data) => {
   }
 };
 
-const checkWinner = (data) => {
+const checkWinner = (data, player) => {
   let result = false;
   winningConditions.forEach((condition) => {
     if (
-      data.gameBoard[condition[0]] === data.gameBoard[condition[1]] &&
-      data.gameBoard[condition[1]] === data.gameBoard[condition[2]]
+      data.gameBoard[condition[0]] === player &&
+      data.gameBoard[condition[1]] === player &&
+      data.gameBoard[condition[2]] === player
     ) {
-      data.gameOver = true;
       result = true;
     }
   });
@@ -147,4 +157,71 @@ const easyAiMove = (data) => {
     }
     changePlayer(data);
   });
+};
+
+const ImpossibleAiMove = (data) => {
+  data.round++;
+  //get best move from minimax
+  const move = minimax(data, "O").index;
+  data.gameBoard[move] = data.player2;
+  let box = document.getElementById(`${move}`);
+  box.textContent = data.player2;
+  box.classList.add("player2");
+
+  console.log(move);
+};
+
+const minimax = (data, player) => {
+  let availableSpaces = data.gameBoard.filter(
+    (space) => space !== "X" && space !== "O"
+  );
+  if (checkWinner(data, data.player1)) {
+    return {
+      score: -100,
+    };
+  } else if (checkWinner(data, data.player2)) {
+    return {
+      score: 100,
+    };
+  } else if (availableSpaces.length === 0) {
+    return {
+      score: 0,
+    };
+  }
+  const potentialMoves = [];
+  //loop over all spaces to get a list of potential moves and check for win
+  for (let i = 0; i < availableSpaces.length; i++) {
+    let move = {};
+    move.index = data.gameBoard[availableSpaces[i]];
+    data.gameBoard[availableSpaces[i]] = player;
+    if (player === data.player2) {
+      move.score = minimax(data, data.player1).score;
+    } else {
+      move.score = minimax(data, data.player2).score;
+    }
+    //set the move
+    data.gameBoard[availableSpaces[i]] = move.index;
+    //push the move to potential moves array
+    potentialMoves.push(move);
+  }
+
+  let bestMove = 0;
+  if (player === data.player2) {
+    let bestScore = -10000;
+    for (let i = 0; i < potentialMoves.length; i++) {
+      if (potentialMoves[i].score > bestScore) {
+        bestScore = potentialMoves[i].score;
+        bestMove = i;
+      }
+    }
+  } else {
+    let bestScore = 10000;
+    for (let i = 0; i < potentialMoves.length; i++) {
+      if (potentialMoves[i].score < bestScore) {
+        bestScore = potentialMoves[i].score;
+        bestMove = i;
+      }
+    }
+  }
+  return potentialMoves[bestMove];
 };
